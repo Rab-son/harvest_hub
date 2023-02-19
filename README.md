@@ -1,5 +1,5 @@
 # HarvestHub App
-HarvestHub is an e-commerce platform that connects small-scale farmers directly with consumers, enabling farmers to sell their products online and consumers to purchase fresh produce directly from the source. The platform is built using Laravel, Vue.js, and MySQL, and is designed to be accessible and user-friendly for farmers and consumers with varying levels of technological proficiency.
+HarvestHub is an e-commerce platform that connects small-scale farmers directly with consumers, enabling farmers to sell their products online and consumers to purchase fresh produce directly from the source. The platform is built using Laravel, ReactJS, and MySQL, and is designed to be accessible and user-friendly for farmers and consumers with varying levels of technological proficiency.
 
 # Installation
 To install the HarvestHub app, follow these steps:
