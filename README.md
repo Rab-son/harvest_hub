@@ -9,9 +9,12 @@ To install the HarvestHub app, follow these steps:
     git clone https://github.com/Rab-son/harvest_hub.git
 2. Install the required dependencies using Composer and NPM:
 
+    cd harvesthub
+
     composer install
 
     npm install
+
 3. Copy the .env.example file and rename it to .env. Update the environment variables in the .env file to reflect your local environment settings, such as the database connection information and app URL.
 
 4. Run database migrations and seeders to set up the database tables and initial data:
