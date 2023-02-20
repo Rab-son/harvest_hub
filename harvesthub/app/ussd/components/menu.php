@@ -31,9 +31,15 @@ class Menu{
 
     public function viewProductMenu(){}
 
+    public function submitProductMenu(){}
+
     public function viewOrdersMenu(){}
 
-    public function submitProductMenu(){}
+    public function viewAccount(){}
+
+    public function viewHelp(){}
+
+
 
 }
 
