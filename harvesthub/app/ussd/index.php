@@ -19,6 +19,8 @@ if($text == "" && $isRegistered){
 
 }else if($isRegistered){
     // unregistered and non-empty string
+}else{
+    // registered and non-empty string
 }
 
 
