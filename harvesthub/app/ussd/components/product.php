@@ -15,7 +15,7 @@
 
         public function productNames($pdo){
 
-            $stmt = $pdo->prepare("SELECT * FROM products LIMIT 6");
+            $stmt = $pdo->prepare("SELECT * FROM products WHERE status = 'Approved' LIMIT 6");
             $stmt->execute();  
             $rows = $stmt->fetchAll();
     
