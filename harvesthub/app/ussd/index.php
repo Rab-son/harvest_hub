@@ -1,6 +1,11 @@
 <?php 
 
 include_once "./components/menu.php";
+include_once 'db.php';
+include_once './components/user.php';
+include_once './components/order.php';
+include_once './components/product.php';
+
 
 //API Variables 
 $sessionId = $_POST["sessionId"];
@@ -9,23 +14,29 @@ $phoneNumber = $_POST["phoneNumber"];
 $text = $_POST["text"];
 
 
-$isRegistered = false;
-$menu = new Menu($text, $sessionId);
+$user = new User($phoneNumber);
+$product = new Product();
+$db = new DBConnector();
+$pdo = $db->connectToDB();
 
-if($text == "" && $isRegistered){
+//$isRegistered = false;
+$menu = new Menu();
+$text = $menu->middleware($text);
+
+if($text == "" && $user->isRegistered($pdo)){
     // registered
-    $menu->mainMenuRegistered();
+    $menu->mainMenuRegistered($user->readName($pdo));
 
-}else if($text == "" && $isRegistered){
+}else if($text == "" && !$user->isRegistered($pdo)){
     // unregistered and empty string
     $menu->mainMenuUnRegistered();
 
-}else if($isRegistered){
+}else if(!$user->isRegistered($pdo)){
     // unregistered and non-empty string
     $textArray = explode("*", $text);
 
     switch($textArray[0]){
-        case 1: $menu->registerMenu($textArray);
+        case 1: $menu->registerMenu($textArray, $phoneNumber, $pdo);
         break;
         default: echo "END Invalide Choice. Please
         Try Again";
@@ -36,10 +47,10 @@ if($text == "" && $isRegistered){
     // registered and non-empty string
     $textArray = explode("*", $text);
     switch($textArray[0]){
-        case 1: $menu->viewProductMenu($textArray);
+        case 1: $menu->viewProductMenu($textArray, $product->productNames($pdo), $user->readId($pdo), $pdo, $user);
         break;
         case 2: $menu->viewOrdersMenu($textArray);
-        break;
+        break; 
         case 3: $menu->submitProductMenu($textArray);
         break;
         case 4: $menu->viewAccount($textArray);
