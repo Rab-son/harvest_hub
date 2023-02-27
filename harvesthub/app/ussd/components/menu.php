@@ -115,7 +115,7 @@ class Menu{
     }
 
     // buy products
-    public function viewProductMenu($textArray, $name, $type ,$id, $pdo, $user){
+    public function viewProductMenu($textArray, $name, $id, $pdo, $user){
         $level = count($textArray);
         if($level == 1){
             $numbering = 0;
