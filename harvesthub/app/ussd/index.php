@@ -49,9 +49,9 @@ if($text == "" && $user->isRegistered($pdo)){
     switch($textArray[0]){
         case 1: $menu->viewProductMenu($textArray, $product->productNames($pdo), $user->readId($pdo), $pdo, $user);
         break;
-        case 2: $menu->viewOrdersMenu($textArray);
+        case 2: $menu->viewOrdersMenu($textArray,);
         break; 
-        case 3: $menu->submitProductMenu($textArray);
+        case 3: $menu->submitProductMenu($textArray, $user->readId($pdo), $pdo, $user);
         break;
         case 4: $menu->viewAccount($textArray);
         break;

@@ -236,9 +236,51 @@ class Menu{
         }
     }
 
+    public function submitProductMenu($textArray, $id, $pdo, $user){
 
+        $level = count($textArray);
+        if($level == 1){
+            echo "CON Enter Product Name";
+        }else if($level == 2){
+            echo "CON Enter Units (e.g Kg)";
+        }else if ($level == 3){   
+            echo "CON Enter Quantity (250)";
+        }else if ($level == 3){   
+            echo "CON Enter Selling Price (in MWK)";
+        }else if ($level == 5){
+            $name = $textArray[1];
+            $unit = $textArray[2];
+            $quantity = $textArray[3];
+            $price = $textArray[4];
 
-    public function submitProductMenu(){}
+            if($pin != $confirmPin){
+                echo "END Your PIN Do Not Match. Please Try Again";
+            }else{
+                // register the user 
+                $product = new Product();
+                $product->setName($name);
+                $product->setUnit($unit);
+                $product->setQuantity($quantity);
+                $product->setPrice($price);
+                $product->register($pdo);
+                // send sms
+                $msg = "You Have Sent the Following Product Details For Apprival" .$name. " " .$unit. " " .$quantity. " " .$price. " , 
+                        You Are Now Registered. 
+                        Enjoy Our Services ";
+                $sms = new Sms($user->getPhone());
+                $result = $sms->sendSMS($msg);
+                if($result['status'] == "success"){
+                    echo "END You will receive an SMS Shortly";
+                }else{
+                    echo "END Something went wrong. 
+                        Please try again";
+                }
+
+            } 
+            
+        }
+
+    }
 
     public function viewOrdersMenu(){}
 
