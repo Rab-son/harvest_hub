@@ -16,6 +16,7 @@ $text = $_POST["text"];
 
 $user = new User($phoneNumber);
 $product = new Product();
+$order = new Order();
 $db = new DBConnector();
 $pdo = $db->connectToDB();
 
@@ -49,7 +50,7 @@ if($text == "" && $user->isRegistered($pdo)){
     switch($textArray[0]){
         case 1: $menu->viewProductMenu($textArray, $product->productNames($pdo), $user->readId($pdo), $pdo, $user);
         break;
-        case 2: $menu->viewOrdersMenu($textArray,);
+        case 2: $menu->viewOrdersMenu($textArray, $order->orderedItem($pdo) , $product->productNames($pdo), $user->readId($pdo), $pdo, $user);
         break; 
         case 3: $menu->submitProductMenu($textArray, $user->readId($pdo), $pdo, $user);
         break;

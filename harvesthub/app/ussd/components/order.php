@@ -56,6 +56,15 @@
             }            
         }
 
+        public function orderedItem($pdo) {
+            $stmt = $pdo->prepare("SELECT o.*, p.name AS product_name FROM orders o JOIN products p ON o.product_id = p.id LIMIT 6");
+            $stmt->execute();
+            $rows = $stmt->fetchAll();
+            return $rows;
+        }
+        
+
+
     }
 
 

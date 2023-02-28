@@ -119,7 +119,7 @@ class Menu{
         $level = count($textArray);
         if($level == 1){
             $numbering = 0;
-            $response = "CON Market Place - Harvest Hub
+            $response = "CON Market Place - HarvestHub
                         Choose Product To Buy\n";
             foreach($name as $n){
                 $numbering++;
@@ -282,7 +282,30 @@ class Menu{
 
     }
 
-    public function viewOrdersMenu(){}
+    public function viewOrdersMenu($textArray, $order ,$id, $pdo, $user){
+        $level = count($textArray);
+        if($level == 1){
+            $numbering = 0;
+            $response = "CON Your Orders - HarvestHub\n";
+            
+            foreach($order as $n){
+                $numbering++;
+                $n['product_id'];
+                $a=array($numbering,$n['product_id']);
+                if($n['product_id']){
+                    $response .=($a[0]).".  " .$n['product_name']." " .$n['quantity']." " .$n['status']." " .$n['location']." \n";  
+                }else{
+                    $response .= "Something Went Wrong\n";
+                }
+           
+            }
+
+            $response .=Util::$GO_TO_MAIN_MENU ." Main Menu\n";
+            echo $response;
+            return $a;
+
+        }
+    }
 
     // Account Info
     public function myAccountMenu($textArray,$user,$pdo){
@@ -324,7 +347,7 @@ class Menu{
         $level = count($textArray);
         if($level == 1){
             $numbering = 0;
-            $response = "CON Harvest Hub Help Center
+            $response = "CON HarvestHub Help Center
                          Call This Line For Fast Help
                          1. TNM: +265 886 78 82 10
                          2. Airtel: +265 997 59 42 74\n";
