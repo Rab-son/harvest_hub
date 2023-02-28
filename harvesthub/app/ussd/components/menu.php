@@ -285,25 +285,47 @@ class Menu{
     public function viewOrdersMenu($textArray, $order ,$id, $pdo, $user){
         $level = count($textArray);
         if($level == 1){
-            $numbering = 0;
-            $response = "CON Your Orders - HarvestHub\n";
-            
-            foreach($order as $n){
-                $numbering++;
-                $n['product_id'];
-                $a=array($numbering,$n['product_id']);
-                if($n['product_id']){
-                    $response .=($a[0]).".  " .$n['product_name']." " .$n['quantity']." " .$n['status']." " .$n['location']." \n";  
-                }else{
-                    $response .= "Something Went Wrong\n";
-                }
-           
-            }
+            echo "CON Enter PIN";
 
+        }else if($level == 2){
+            $user->setPin($textArray[1]);
+            if($user->correctPin($pdo) == true){
+
+                $numbering = 0;
+                $response = "CON Your Orders - HarvestHub\n";
+                
+                $has_orders = false;
+                foreach ($order as $n) {
+                    $numbering++;
+                    $n['product_id'];
+                    $a = array($numbering, $n['product_id']);
+                    if ($n['customer_id'] == $id) {
+                        $response .= ($a[0]) . ".  " . $n['product_name'] . " " . $n['quantity'] . " " . $n['status'] . " " . $n['location'] . " \n";
+                        $has_orders = true;
+                    }
+                }
+                
+                if (!$has_orders) {
+                    $response .= "You Have No Orders\n";
+                }
+    
+                $response .=Util::$GO_TO_MAIN_MENU ." Main Menu\n";
+                echo $response;
+                return $a;
+    
+
+
+            }else{
+                $response = "CON Wrong PIN\n";
+                $response .=Util::$GO_BACK ." Try Again\n";
+                $response .=Util::$GO_TO_MAIN_MENU ." Main Menu\n";
+                echo $response;
+            }
+        }else{
+            $response = "CON Wrong Option\n";
+            $response .=Util::$GO_BACK ." Try Again\n";
             $response .=Util::$GO_TO_MAIN_MENU ." Main Menu\n";
             echo $response;
-            return $a;
-
         }
     }
 
