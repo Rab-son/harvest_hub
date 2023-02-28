@@ -125,7 +125,7 @@ class Menu{
                 $numbering++;
                 $n['id'];
                 $a=array($numbering,$n['id']);
-                $response .=($a[0]).". ".$a[1]." " .$n['name']." \n";
+                $response .=($a[0]).".  " .$n['name']." \n";
                 
             }
             $response .=Util::$GO_TO_MAIN_MENU ." Main Menu\n";
@@ -136,7 +136,7 @@ class Menu{
             // choosing quantity type
             $numbering = 0;
             $response = "CON Quantity
-                            Choose Amount\n";
+                            Choose Amount (10kg)\n";
             foreach($type as $t){
                 $numbering++;
                 $t['id'];
@@ -148,7 +148,6 @@ class Menu{
             echo $response;
 
         }else if($level == 3){
-            // enter amount of waste
             echo "CON Enter Drop Location (e.g Area 6)";
         }else if($level == 4){
             $response = "CON Request Details\n";
@@ -158,7 +157,7 @@ class Menu{
                 $numbering++;
                 $a=array($numbering, $n['id']);
                 if($textArray[1] == $a[0]){
-                    $response .="Inst. : ".$n['name']." \n";
+                    $response .="Product Name : ".$n['name']." \n";
                 }
             }
 
@@ -167,62 +166,50 @@ class Menu{
                 $counting++;
                 $a=array($counting, $t['id']);
                 if($textArray[2] == $a[0]){
-                    $response .="Waste Type : ".$t['name']." \n";
+                    $response .="Drop Location : ".$t['name']." \n";
                 }
             }
 
-            $response .="Amount: $textArray[3] \n";
-            $response .="Desc: $textArray[4] \n";
-            $response .="Loc: $textArray[5] \n";
+            $response .="Amount: $textArray[2] \n";
+            $response .="Drop Location: $textArray[3] \n";
             $response .="1. Confirm\n";
             $response .="2. Cancel\n";
             $response .=Util::$GO_BACK ." Back\n";
             $response .=Util::$GO_TO_MAIN_MENU ." Main Menu\n";
             echo $response;
-        }else if($level == 5 && $textArray[6] == 1){
+        }else if($level == 5 && $textArray[4] == 1){
             echo "CON Enter PIN";
-        }else if($level == 5 && $textArray[6] == 2){
+        }else if($level == 5 && $textArray[4] == 2){
             echo "END Thank you for using our service";
         }else if($level == 6){
-            $user->setPin($textArray[7]);
+            //echo "END Thank you for using".$textArray[5]." our service";
+            $user->setPin($textArray[5]);
             if($user->correctPin($pdo) == true){
                 //database serve
-                $amount = $textArray[3];
-                $description = $textArray[4];
-                $location = $textArray[5];
+                $quantity = $textArray[2];
+                $location = $textArray[3];
 
                 $numbering = 0;
                 foreach($name as $n){
                     $numbering++;
                     $a=array($numbering, $n['id']);
                     if($textArray[1] == $a[0]){
-                        $inst_id = $n['id'];
-                        $inst_name = $n['name'];
+                        $product_id = $n['id'];
+                        $product_name = $n['name'];
                     }
                 }
 
-                $counting = 0;
-                foreach($type as $t){
-                    $counting++;
-                    $a=array($counting, $t['id']);
-                    if($textArray[2] == $a[0]){
-                        $waste_type = $t['id'];
-                        $waste_name = $t['name'];
-                    }
-                }
-
-                $request = new Request();
-                $request->setInstitutionId($inst_id);
-                $request->setUserId($id);
-                $request->setLocation($location);
-                $request->setQuantity($quantity);
-                $request->register($pdo);
+                $order = new Order();
+                $order->setProduct($product_id);
+                $order->setUserId($id);
+                $order->setLocation($location);
+                $order->setQuantity($quantity);
+                $order->register($pdo);
                 date_default_timezone_set('Africa/Blantyre');
-                $msg = "Your request is sent to " .$inst_name. " with the following details:\n
-                        Waste Type: $waste_name \n 
-                        Amount: $amount\n
+                $msg = "Your request has the following details:\n
+                        Product Name: $product_name \n 
+                        Amount: $quantity\n
                         Location: $location\n
-                        Description: $description\n 
                         Date: ". date("Y-m-d h:i:sa")." \n
                         Enjoy Our Services";
                 $sms = new Sms($user->getPhone());

@@ -16,7 +16,7 @@
         }
 
         public function setQuantity($quantity){
-            $this->$quantity = $quantity;
+            $this->quantity = $quantity;
         }
 
         public function getQuantity(){
@@ -24,7 +24,7 @@
         }
 
         public function setLocation($location){
-            $this->$location = $location;
+            $this->location = $location;
         }
 
         public function getLocation(){
@@ -48,7 +48,7 @@
                 (customer_id, product_id, location, quantity) 
                 values(?,?,?,?)");
                 $stmt->execute([$this->getUserId(),$this->getProduct(),
-                                $this->getLocation(), $this->getQuantity(), 
+                                $this->getLocation(), $this->getQuantity() 
                               ]);
             
             }catch(PDOException $e){

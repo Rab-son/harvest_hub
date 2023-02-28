@@ -128,7 +128,7 @@
 
     public function correctPin($pdo){
 
-        $stmt = $pdo->prepare("select pin from users where phone_number=?");
+        $stmt = $pdo->prepare("SELECT pin FROM users WHERE phone_number=?");
         $stmt->execute([$this->getPhone()]);
         $row = $stmt->fetch();
 
