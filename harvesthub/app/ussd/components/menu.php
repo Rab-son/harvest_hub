@@ -245,8 +245,8 @@ class Menu{
             echo "CON Enter Units (e.g Kg)";
         }else if ($level == 3){   
             echo "CON Enter Quantity (250)";
-        }else if ($level == 3){   
-            echo "CON Enter Selling Price (in MWK)";
+        }else if ($level == 4){   
+            echo "CON Enter Selling Price (in MWK) Per Unit";
         }else if ($level == 5){
             $name = $textArray[1];
             $unit = $textArray[2];

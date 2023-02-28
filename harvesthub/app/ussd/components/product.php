@@ -66,7 +66,7 @@
         public function register($pdo){
             try{
                 //hash the pin
-                $stmt = $pdo->prepare("INSERT INTO orders 
+                $stmt = $pdo->prepare("INSERT INTO products 
                 (name, unit, price, quantity) 
                 values(?,?,?,?)");
                 $stmt->execute([$this->getName(),$this->getUnit(),
