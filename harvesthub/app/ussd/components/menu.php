@@ -284,9 +284,58 @@ class Menu{
 
     public function viewOrdersMenu(){}
 
-    public function viewAccount(){}
+    // Account Info
+    public function myAccountMenu($textArray,$user,$pdo){
+        $level = count($textArray);
+        if($level == 1){
+            echo "CON Enter Old PIN";
+        }else if($level == 2){
+            $user->setPin($textArray[1]);
+            if($user->correctPin($pdo) == true){
+                echo "CON Enter New PIN";
+            }else{
+                $response = "CON Wrong PIN\n";
+                $response .=Util::$GO_TO_MAIN_MENU ." Main Menu\n";
+                echo $response;
+            }
 
-    public function viewHelp(){}
+        }else if ($level == 3){
+            echo "CON Confirm PIN";
+        }else if ($level == 4){
+            $pin = $textArray[2];
+            $confirmPin = $textArray[3];
+            if($pin != $confirmPin){
+                echo "END Your PIN Do Not Match. Please Try Again";
+            }else{
+                // update pasword the user 
+                $user->setPin($pin);
+                $user->updatePin($pdo);
+                // send sms
+                $response = "CON Pin Updated Successfully\n";
+                $response .=Util::$GO_TO_MAIN_MENU ." Main Menu\n";
+                echo $response;
+
+            } 
+        }
+        
+    }
+
+    public function viewHelp($textArray){
+        $level = count($textArray);
+        if($level == 1){
+            $numbering = 0;
+            $response = "CON Harvest Hub Help Center
+                         Call This Line For Fast Help
+                         1. TNM: +265 886 78 82 10
+                         2. Airtel: +265 997 59 42 74\n";
+
+            $response .=Util::$GO_TO_MAIN_MENU ." Main Menu\n";
+            echo $response;
+            return $a;
+
+        }
+
+    }
 
 
 

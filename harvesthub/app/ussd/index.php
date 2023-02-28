@@ -53,7 +53,7 @@ if($text == "" && $user->isRegistered($pdo)){
         break; 
         case 3: $menu->submitProductMenu($textArray, $user->readId($pdo), $pdo, $user);
         break;
-        case 4: $menu->viewAccount($textArray);
+        case 4: $menu->myAccountMenu($textArray, $user, $pdo);
         break;
         case 5: $menu->viewHelp($textArray);
         break;
