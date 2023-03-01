@@ -48,6 +48,7 @@ export default function Users() {
             <th>ID</th>
             <th>Name</th>
             <th>Email</th>
+            <th>Phone Number</th>
             <th>Create Date</th>
             <th>Actions</th>
           </tr>
@@ -66,8 +67,9 @@ export default function Users() {
             {users.map((u, index) => (
                 <tr key={u.id}>
                 <td>{index + 1}</td>
-                <td>{u.name}</td>
-                <td>{u.email}</td>
+                <td>{u.first_name}</td>
+                <td>{u.last_name}</td>
+                <td>{u.phone_number}</td>
                 <td>{u.created_at}</td>
                 <td>
                     <Link className="btn-edit" to={'/users/' + u.id}>Edit</Link>

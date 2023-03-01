@@ -17,7 +17,10 @@ class UserController extends Controller
      */
     public function index()
     {
-        return UserResource::collection(User::query()->orderBy('id', 'desc')->paginate(10));
+        $users = User::whereNotNull('pin')
+                    ->orderBy('id', 'desc')
+                    ->paginate(10);
+        return UserResource::collection($users);
     }
 
     /**
