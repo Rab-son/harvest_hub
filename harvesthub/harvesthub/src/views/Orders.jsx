@@ -72,6 +72,8 @@ export default function Users() {
                 <td>{u.phone_number}</td>
                 <td>{u.created_at}</td>
                 <td>
+                    <Link className="btn-edit" to={'/users/' + u.id}>Edit</Link>
+                    &nbsp;
                     <button className="btn-delete" onClick={ev => onDeleteClick(u)}>Delete</button>
                 </td>
                 </tr>
