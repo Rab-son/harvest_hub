@@ -3,32 +3,32 @@ import axiosClient from "../axios-client.js";
 import {Link} from "react-router-dom";
 import {useStateContext} from "../context/ContextProvider.jsx";
 
-export default function Users() {
-  const [users, setUsers] = useState([]);
+export default function Orders() {
+  const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(false);
   const {setNotification} = useStateContext()
 
   useEffect(() => {
-    getUsers();
+    getOrders();
   }, [])
 
-  const onDeleteClick = user => {
-    if (!window.confirm("Are you sure you want to delete this user?")) {
+  const onDeleteClick = order => {
+    if (!window.confirm("Are you sure you want to delete this order?")) {
       return
     }
-    axiosClient.delete(`/users/${user.id}`)
+    axiosClient.delete(`/orders/${order.id}`)
       .then(() => {
-        setNotification('User was successfully deleted')
-        getUsers()
+        setNotification('Order was successfully deleted')
+        getOrders()
       })
   }
 
-  const getUsers = () => {
+  const getOrders = () => {
     setLoading(true)
-    axiosClient.get('/users')
+    axiosClient.get('/orders')
       .then(({ data }) => {
         setLoading(false)
-        setUsers(data.data)
+        setOrders(data.data)
       })
       .catch(() => {
         setLoading(false)
@@ -39,17 +39,21 @@ export default function Users() {
     <div>
       <div style={{display: 'flex', justifyContent: "space-between", alignItems: "center"}}>
         <h1>Orders</h1>
-        <Link className="btn-add" to="/users/new">Add new</Link>
+        <Link className="btn-add" to="/orders/new">Add new</Link>
       </div>
       <div className="card animated fadeInDown">
         <table>
           <thead>
           <tr>
             <th>ID</th>
-            <th>Name</th>
-            <th>Email</th>
+            <th>First Name</th>
+            <th>Last Name</th>
             <th>Phone Number</th>
-            <th>Create Date</th>
+            <th>Product Name</th>
+            <th>Quantity</th>
+            <th>Drop Location</th>
+            <th>Status</th>
+            <th>Order Date</th>
             <th>Actions</th>
           </tr>
           </thead>
@@ -64,15 +68,19 @@ export default function Users() {
           }
           {!loading &&
             <tbody>
-            {users.map((u, index) => (
+            {orders.map((u, index) => (
                 <tr key={u.id}>
                 <td>{index + 1}</td>
                 <td>{u.first_name}</td>
                 <td>{u.last_name}</td>
                 <td>{u.phone_number}</td>
+                <td>{u.name}</td>
+                <td>{u.quantity}</td>
+                <td>{u.location}</td>
+                <td>{u.status}</td>
                 <td>{u.created_at}</td>
                 <td>
-                    <Link className="btn-edit" to={'/users/' + u.id}>Edit</Link>
+                    <Link className="btn-edit" to={'/orders/' + u.id}>Edit</Link>
                     &nbsp;
                     <button className="btn-delete" onClick={ev => onDeleteClick(u)}>Delete</button>
                 </td>

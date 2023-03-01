@@ -5,10 +5,10 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
-use App\Http\Resources\UserResource;
+use App\Http\Resources\OrderResource;
 use App\Models\Order;
 
-class UserController extends Controller
+class OrderController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,8 +17,16 @@ class UserController extends Controller
      */
     public function index()
     {
-        return UserResource::collection(Order::query()->orderBy('id', 'desc')->paginate(10));
+        return OrderResource::collection(
+            Order::query()
+                ->join('users', 'users.id', '=', 'orders.customer_id')
+                ->join('products', 'products.id', '=', 'orders.product_id')
+                ->select('orders.id', 'orders.quantity', 'orders.location', 'orders.status', 'orders.created_at', 'users.first_name', 'users.last_name', 'users.phone_number', 'products.name')
+                ->orderBy('orders.id', 'desc')
+                ->paginate(10)
+        );
     }
+    
 
     /**
      * Store a newly created resource in storage.
@@ -32,7 +40,7 @@ class UserController extends Controller
         $data['password'] = bcrypt($data['password']);
         $order = Order::create($data);
 
-        return response(new UserResource($order) , 201);
+        return response(new OrderResource($order) , 201);
     }
 
     /**
@@ -43,7 +51,7 @@ class UserController extends Controller
      */
     public function show(Order $order)
     {
-        return new UserResource($order);
+        return new OrderResource($order);
     }
 
     /**
@@ -61,7 +69,7 @@ class UserController extends Controller
         }
         $order->update($data);
 
-        return new UserResource($order);
+        return new OrderResource($order);
     }
 
     /**
