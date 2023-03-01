@@ -39,7 +39,6 @@ export default function Orders() {
     <div>
       <div style={{display: 'flex', justifyContent: "space-between", alignItems: "center"}}>
         <h1>Orders</h1>
-        <Link className="btn-add" to="/orders/new">Add new</Link>
       </div>
       <div className="card animated fadeInDown">
         <table>
@@ -51,7 +50,7 @@ export default function Orders() {
             <th>Phone Number</th>
             <th>Product Name</th>
             <th>Quantity</th>
-            <th>Drop Location</th>
+            <th>Address</th>
             <th>Status</th>
             <th>Order Date</th>
             <th>Actions</th>
@@ -80,7 +79,7 @@ export default function Orders() {
                 <td>{u.status}</td>
                 <td>{u.created_at}</td>
                 <td>
-                    <Link className="btn-edit" to={'/orders/' + u.id}>Edit</Link>
+                    <Link className="btn-add" to={'/orders/' + u.id}>Update</Link>
                     &nbsp;
                     <button className="btn-delete" onClick={ev => onDeleteClick(u)}>Delete</button>
                 </td>
