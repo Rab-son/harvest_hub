@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Http\Resources\UserResource;
-use App\Models\User;
+use App\Models\Order;
 
 class UserController extends Controller
 {
@@ -17,10 +17,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::whereNotNull('pin')
-                    ->orderBy('id', 'desc')
-                    ->paginate(10);
-        return UserResource::collection($users);
+        return UserResource::collection(Order::query()->orderBy('id', 'desc')->paginate(10));
     }
 
     /**
@@ -33,49 +30,49 @@ class UserController extends Controller
     {
         $data = $request->validated();
         $data['password'] = bcrypt($data['password']);
-        $user = User::create($data);
+        $order = Order::create($data);
 
-        return response(new UserResource($user) , 201);
+        return response(new UserResource($order) , 201);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param \App\Models\User $user
+     * @param \App\Models\Order $order
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
+    public function show(Order $order)
     {
-        return new UserResource($user);
+        return new UserResource($order);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param \App\Http\Requests\UpdateUserRequest $request
-     * @param \App\Models\User                     $user
+     * @param \App\Models\Order                     $order
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateUserRequest $request, User $user)
+    public function update(UpdateUserRequest $request, Order $order)
     {
         $data = $request->validated();
         if (isset($data['password'])) {
             $data['password'] = bcrypt($data['password']);
         }
-        $user->update($data);
+        $order->update($data);
 
-        return new UserResource($user);
+        return new UserResource($order);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param \App\Models\User $user
+     * @param \App\Models\Order $order
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user)
+    public function destroy(Order $order)
     {
-        $user->delete();
+        $order->delete();
 
         return response("", 204);
     }
