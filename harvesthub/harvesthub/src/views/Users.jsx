@@ -49,7 +49,7 @@ export default function Users() {
             <th>Name</th>
             <th>Email</th>
             <th>Phone Number</th>
-            <th>Create Date</th>
+            <th>Registered On</th>
             <th>Actions</th>
           </tr>
           </thead>
