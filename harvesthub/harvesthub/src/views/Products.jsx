@@ -73,7 +73,7 @@ export default function Products() {
                 <td>{u.unit}</td>
                 <td>{u.price}</td>
                 <td>{u.quantity}</td>
-                <td>{u.status}</td>
+                <td className={u.status === 'Pending' ? 'red-status' : ''}>{u.status}</td>
                 <td>{u.phone_number}</td>
                 <td>
                     <Link className="btn-edit" to={'/products/' + u.id}>Edit</Link>
