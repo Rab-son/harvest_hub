@@ -8,6 +8,7 @@ import Signup from "./views/Signup";
 import Users from "./views/Users";
 import Orders from "./views/Orders";
 import UserForm from "./views/UserForm";
+import OrderForm from "./views/OrderForm";
 
 const router = createBrowserRouter([
   {
@@ -29,16 +30,17 @@ const router = createBrowserRouter([
       {
         path: '/users/new',
         element: <UserForm key="userCreate" />
-      },
-      {
-        path: '/users/:id',
-        element: <UserForm key="userUpdate" />
       }
       ,
       {
         path: '/orders',
         element: <Orders/>
-      },
+      }
+      ,
+      {
+        path: '/orders/:id',
+        element: <OrderForm key="orderUpdate" />
+      }
 
 
     ]
