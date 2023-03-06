@@ -47,8 +47,11 @@ export default function Products() {
           <tr>
             <th>ID</th>
             <th>Name</th>
-            <th>Email</th>
-            <th>Create Date</th>
+            <th>Unit</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Status</th>
+            <th>Phone Number</th>
             <th>Actions</th>
           </tr>
           </thead>
@@ -67,8 +70,11 @@ export default function Products() {
                 <tr key={u.id}>
                 <td>{index + 1}</td>
                 <td>{u.name}</td>
-                <td>{u.email}</td>
-                <td>{u.created_at}</td>
+                <td>{u.unit}</td>
+                <td>{u.price}</td>
+                <td>{u.quantity}</td>
+                <td>{u.status}</td>
+                <td>{u.phone_number}</td>
                 <td>
                     <Link className="btn-edit" to={'/products/' + u.id}>Edit</Link>
                     &nbsp;

@@ -3,10 +3,10 @@ import {useEffect, useState} from "react";
 import axiosClient from "../axios-client.js";
 import {useStateContext} from "../context/ContextProvider.jsx";
 
-export default function OrderForm() {
+export default function ProductForm() {
   const navigate = useNavigate();
   let {id} = useParams();
-  const [order, setOrder] = useState({
+  const [product, setProduct] = useState({
     id: null,
     status: '',
   })
@@ -17,10 +17,10 @@ export default function OrderForm() {
   if (id) {
     useEffect(() => {
       setLoading(true)
-      axiosClient.get(`/orders/${id}`)
+      axiosClient.get(`/products/${id}`)
         .then(({data}) => {
           setLoading(false)
-          setOrder(data)
+          setProduct(data)
         })
         .catch(() => {
           setLoading(false)
@@ -30,11 +30,11 @@ export default function OrderForm() {
 
   const onSubmit = ev => {
     ev.preventDefault()
-    if (order.id) {
-      axiosClient.put(`/orders/${order.id}`, order)
+    if (product.id) {
+      axiosClient.put(`/products/${product.id}`, product)
         .then(() => {
-          setNotification('Order was successfully updated')
-          navigate('/orders')
+          setNotification('Product was successfully updated')
+          navigate('/products')
         })
         .catch(err => {
           const response = err.response;
@@ -43,10 +43,10 @@ export default function OrderForm() {
           }
         })
     } else {
-      axiosClient.post('/orders', order)
+      axiosClient.post('/products', product)
         .then(() => {
-          setNotification('Order was successfully created')
-          navigate('/orders')
+          setNotification('Product was successfully created')
+          navigate('/products')
         })
         .catch(err => {
           const response = err.response;
@@ -59,9 +59,8 @@ export default function OrderForm() {
 
   return (
     <>
-      {order.id && <h1>Update Order: {order.name}</h1>}
-      { <div>Customer Name: {order.first_name} {order.last_name}</div>}
-      { <div>Phone Number: {order.phone_number}</div>}
+      {product.id && <h1>Update Product: {product.name}</h1>}
+      { <div>Phone Number: {product.phone_number}</div>}
       <div className="card animated fadeInDown">
         {loading && (
           <div className="text-center">
@@ -77,11 +76,15 @@ export default function OrderForm() {
         }
         {!loading && (
           <form onSubmit={onSubmit}>
-              <select  value={order.status} onChange={(ev) => setOrder({ ...order, status: ev.target.value }) }>
+              <input value={product.name} onChange={ev => setProduct({...product, name: ev.target.value})} placeholder="Name"/>
+              <input value={product.unit} onChange={ev => setProduct({...product, unit: ev.target.value})} placeholder="Unit"/>
+              <input value={product.quantity} onChange={ev => setProduct({...product, quantity: ev.target.value})} placeholder="quantity"/>
+              <input value={product.price} onChange={ev => setProduct({...product, price: ev.target.value})} placeholder="price"/>
+              <input value={product.phone_number} onChange={ev => setProduct({...product, phone_number: ev.target.value})} placeholder="Phone Number"/>
+              <select  value={product.status} onChange={(ev) => setProduct({ ...product, status: ev.target.value }) }>
                 <option value="">--Select Status--</option>
                 <option value="Pending">Pending</option>
-                <option value="Transported">Transported</option>
-                <option value="Delivered">Delivered</option>
+                <option value="Approved">Approved</option>
               </select>
             <button className="btn">Save</button>
           </form>
