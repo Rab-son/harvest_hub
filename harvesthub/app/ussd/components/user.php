@@ -12,6 +12,12 @@ class User
 
     protected $help_description;
 
+    //Product Variables
+    protected $name;
+    protected $unit;
+    protected $price;
+    protected $quantity;
+
     public function __construct($phonenumber)
     {
         $this->phonenumber = $phonenumber;
@@ -93,6 +99,47 @@ class User
         return $this->phonenumber;
     }
 
+    // product getters and setters
+    public function setProductQuantity($quantity)
+    {
+        $this->quantity = $quantity;
+    }
+
+    public function getProductQuantity()
+    {
+        return $this->quantity;
+    }
+
+    public function setProductPrice($price)
+    {
+        $this->price = $price;
+    }
+
+    public function getProductPrice()
+    {
+        return $this->price;
+    }
+
+    public function setProductName($name)
+    {
+        $this->name = $name;
+    }
+
+    public function getProductName()
+    {
+        return $this->name;
+    }
+
+    public function setProductUnit($unit)
+    {
+        $this->unit = $unit;
+    }
+
+    public function getProductUnit()
+    {
+        return $this->unit;
+    }
+
     public function register($pdo)
     {
         try {
@@ -113,10 +160,10 @@ class User
     {
         try {
             $stmt = $pdo->prepare("INSERT INTO products
-            (name, unit, price, quantity, status, phone_number)
-                                   values(?,?,?,?,?,?)");
+            (name, unit, price, quantity, phone_number)
+                                   values(?,?,?,?,?)");
             $stmt->execute([$this->getProductName(), $this->getProductUnit(), $this->getProductPrice(), $this->getProductQuantity(),
-                $this->getProductStatus(), $this->getPhone()]);
+                $this->getPhone()]);
 
         } catch (PDOException $e) {
             echo $e->getMessage();
