@@ -7,8 +7,10 @@ import NotFound from "./views/NotFound";
 import Signup from "./views/Signup";
 import Users from "./views/Users";
 import Orders from "./views/Orders";
+import Products from "./views/Products";
 import UserForm from "./views/UserForm";
 import OrderForm from "./views/OrderForm";
+import ProductForm from "./views/ProductForm";
 
 const router = createBrowserRouter([
   {
@@ -40,6 +42,17 @@ const router = createBrowserRouter([
       {
         path: '/orders/:id',
         element: <OrderForm key="orderUpdate" />
+      }
+
+      ,
+      {
+        path: '/products',
+        element: <Products/>
+      }
+      ,
+      {
+        path: '/products/:id',
+        element: <ProductForm key="productUpdate" />
       }
 
 
