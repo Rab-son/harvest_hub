@@ -51,6 +51,11 @@ const router = createBrowserRouter([
       }
       ,
       {
+        path: '/products/new',
+        element: <ProductForm key="productCreate" />
+      }
+      ,
+      {
         path: '/products/:id',
         element: <ProductForm key="productUpdate" />
       }

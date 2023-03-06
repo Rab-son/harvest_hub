@@ -8,6 +8,11 @@ export default function ProductForm() {
   let {id} = useParams();
   const [product, setProduct] = useState({
     id: null,
+    name: '',
+    unit: '',
+    price: '',
+    quantity: '',
+    phone_number: '',
     status: '',
   })
   const [errors, setErrors] = useState(null)
@@ -60,7 +65,8 @@ export default function ProductForm() {
   return (
     <>
       {product.id && <h1>Update Product: {product.name}</h1>}
-      { <div>Phone Number: {product.phone_number}</div>}
+      {product.id && <div>Phone Number: {product.phone_number}</div>}
+      {!product.id && <h1>New Product</h1>}
       <div className="card animated fadeInDown">
         {loading && (
           <div className="text-center">

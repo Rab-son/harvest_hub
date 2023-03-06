@@ -14,6 +14,7 @@ class Product extends Model
         'unit',
         'price',
         'quantity',
+        'phone_number',
         'status',
     ];
 }

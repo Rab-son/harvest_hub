@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreProductRequest;
-use App\Http\Requests\UpdateUserRequest;
+use App\Http\Requests\UpdateProductRequest;
 use App\Http\Resources\ProductResource;
 use App\Models\Product;
 
@@ -29,7 +29,6 @@ class ProductController extends Controller
     public function store(StoreProductRequest $request)
     {
         $data = $request->validated();
-        $data['password'] = bcrypt($data['password']);
         $product = Product::create($data);
 
         return response(new ProductResource($product), 201);
@@ -53,12 +52,9 @@ class ProductController extends Controller
      * @param \App\Models\Product                     $product
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateUserRequest $request, Product $product)
+    public function update(UpdateProductRequest $request, Product $product)
     {
         $data = $request->validated();
-        if (isset($data['password'])) {
-            $data['password'] = bcrypt($data['password']);
-        }
         $product->update($data);
 
         return new ProductResource($product);
