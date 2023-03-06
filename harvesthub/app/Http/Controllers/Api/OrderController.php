@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreUserRequest;
+use App\Http\Requests\UpdateOrderRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Http\Resources\OrderResource;
 use App\Models\Order;
@@ -48,10 +49,24 @@ class OrderController extends Controller
      * @param \App\Models\Order $order
      * @return \Illuminate\Http\Response
      */
+
     public function show(Order $order)
     {
+        $order = Order::query()
+            ->join('users', 'users.id', '=', 'orders.customer_id')
+            ->join('products', 'products.id', '=', 'orders.product_id')
+            ->where('orders.id', '=', $order->id)
+            ->select('orders.id', 'orders.quantity', 'orders.location', 'orders.status', 'orders.created_at', 'users.first_name', 'users.last_name', 'users.phone_number', 'products.name')
+            ->first();
+
         return new OrderResource($order);
     }
+
+    /*
+    public function show(Order $order)
+    {
+    return new OrderResource($order);
+    }*/
 
     /**
      * Update the specified resource in storage.
@@ -60,7 +75,7 @@ class OrderController extends Controller
      * @param \App\Models\Order                     $order
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateUserRequest $request, Order $order)
+    public function update(UpdateOrderRequest $request, Order $order)
     {
         $data = $request->validated();
         $order->update($data);

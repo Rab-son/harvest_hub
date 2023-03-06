@@ -8,10 +8,7 @@ export default function OrderForm() {
   let {id} = useParams();
   const [order, setOrder] = useState({
     id: null,
-    name: '',
-    email: '',
-    password: '',
-    password_confirmation: ''
+    status: '',
   })
   const [errors, setErrors] = useState(null)
   const [loading, setLoading] = useState(false)
@@ -63,7 +60,8 @@ export default function OrderForm() {
   return (
     <>
       {order.id && <h1>Update Order: {order.name}</h1>}
-      {!order.id && <h1>New Order</h1>}
+      { <div>Customer Name: {order.first_name} {order.last_name}</div>}
+      { <div>Phone Number: {order.phone_number}</div>}
       <div className="card animated fadeInDown">
         {loading && (
           <div className="text-center">
