@@ -26,7 +26,6 @@ class OrderController extends Controller
                 ->paginate(10)
         );
     }
-    
 
     /**
      * Store a newly created resource in storage.
@@ -40,7 +39,7 @@ class OrderController extends Controller
         $data['password'] = bcrypt($data['password']);
         $order = Order::create($data);
 
-        return response(new OrderResource($order) , 201);
+        return response(new OrderResource($order), 201);
     }
 
     /**
@@ -64,9 +63,6 @@ class OrderController extends Controller
     public function update(UpdateUserRequest $request, Order $order)
     {
         $data = $request->validated();
-        if (isset($data['password'])) {
-            $data['password'] = bcrypt($data['password']);
-        }
         $order->update($data);
 
         return new OrderResource($order);
