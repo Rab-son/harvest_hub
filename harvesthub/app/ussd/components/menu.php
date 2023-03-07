@@ -315,7 +315,7 @@ class Menu{
                 $n['product_id'];
                 $a = array($numbering, $n['product_id']);
                 if ($n['customer_id'] == $id) {
-                    $response .= ($a[0]) . ".  " . $n['product_name'] . " " . $n['quantity'] . " " . $n['status'] . " " . $n['location'] . " \n";
+                    $response .= ($a[0]) . ".  " . $n['product_name'] . " " . $n['quantity'] . " " . $n['status'] . " " . $n['updated_at'] . " \n";
                     $has_orders = true;
                 }
             }
