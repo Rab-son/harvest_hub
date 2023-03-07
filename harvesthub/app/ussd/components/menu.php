@@ -136,7 +136,7 @@ class Menu{
             // choosing quantity type
             $numbering = 0;
             $response = "CON Quantity
-                            Choose Amount (10kg)\n";
+                         Choose Amount (10kg)\n";
             foreach($type as $t){
                 $numbering++;
                 $t['id'];
@@ -306,14 +306,15 @@ class Menu{
                 echo $response;
             }
         }else if($level == 3 && $textArray[2] == 1){
+
             $numbering = 0;
-            $response = "CON Your Orders - HarvestHub\n";
+            $response = "CON Your Orders - HarvestHub\n Choose To Mark As Read\n";
             
             $has_orders = false;
             foreach ($order as $n) {
                 $numbering++;
-                $n['product_id'];
-                $a = array($numbering, $n['product_id']);
+                $n['id'];
+                $a = array($numbering, $n['id']);
                 if ($n['customer_id'] == $id) {
                     $response .= ($a[0]) . ".  " . $n['product_name'] . " " . $n['quantity'] . " " . $n['status'] . " " . $n['updated_at'] . " \n";
                     $has_orders = true;
@@ -349,6 +350,64 @@ class Menu{
             $response .=Util::$GO_TO_MAIN_MENU ." Main Menu\n";
             echo $response;
             return $a;
+        }else if($level == 4){
+            if($textArray[2] == 1){
+
+
+                $numbering = 0;
+                foreach($order as $n){
+                    $numbering++;
+                    $a=array($numbering, $n['id']);
+                    if($textArray[3] == $a[0]){
+                        $product_id = $n['id'];
+                        $product_name = $n['name'];
+                    }
+                }
+                
+                $order = new Order();
+                $order->setUserId($id);
+                $order->setProduct($product_id);
+                $order->updateOrder($pdo);
+                
+
+                $response = "CON Order Marked Successfully.\n";
+                $response .=Util::$GO_BACK ." Mark Another\n";
+                $response .=Util::$GO_TO_MAIN_MENU ." Main Menu\n";
+                echo $response;
+
+            }else if($textArray[2] == 2){
+
+                $response = "CON Product Marked Successfully.\n";
+                $response .=Util::$GO_BACK ." Mark Another\n";
+                $response .=Util::$GO_TO_MAIN_MENU ." Main Menu\n";
+                echo $response;
+
+            }else{
+
+                $response = "CON Wrong Option\n";
+                $response .=Util::$GO_BACK ." Try Again\n";
+                $response .=Util::$GO_TO_MAIN_MENU ." Main Menu\n";
+                echo $response;
+
+            }
+
+                /*
+                $numbering = 0;
+                foreach($name as $n){
+                    $numbering++;
+                    $a=array($numbering, $n['id']);
+                    if($textArray[1] == $a[0]){
+                        $order_id = $n['id'];
+                        $product_name = $n['name'];
+                        $notification = 'Read';
+
+                    }
+                }*/
+
+                //$order->setStatus($id);
+                //echo $order->updateOrder($pdo);
+
+
         }
         else{
             $response = "CON Wrong Option\n";
