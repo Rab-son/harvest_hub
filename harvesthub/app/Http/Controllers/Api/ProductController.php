@@ -70,7 +70,7 @@ class ProductController extends Controller
             $sms = $AT->sms();
     
             // Set the message
-            $message = "The status of your product has been updated.";
+            $message = "The status of your product has been updated. Please Check The Notification Section";
     
             // Set the recipients
             $recipients = [$phone_number];

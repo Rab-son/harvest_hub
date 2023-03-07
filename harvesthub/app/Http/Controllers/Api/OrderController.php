@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateOrderRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Http\Resources\OrderResource;
 use App\Models\Order;
+use AfricasTalking\SDK\AfricasTalking;
 
 class OrderController extends Controller
 {
@@ -80,7 +81,36 @@ class OrderController extends Controller
         $data = $request->validated();
         $order->update($data);
 
+    
+        // Check if phone_number exists on the form
+        $phone_number = $request->input('phone_number');
+        if ($phone_number) {
+            // Initialize the SDK
+            $username = env('AFRICASTALKING_USERNAME');
+            $api_key = env('AFRICASTALKING_API_KEY');
+            $AT = new AfricasTalking($username, $api_key);
+    
+            // Set the SMS service
+            $sms = $AT->sms();
+    
+            // Set the message
+            $message = "The status of your order has been updated. Please Check The Notification Section";
+    
+            // Set the recipients
+            $recipients = [$phone_number];
+    
+            // Send the message
+            $sms->send([
+                'to'      => $recipients,
+                'message' => $message,
+                'from'    => 'HH'
+            ]);
+        }
+    
         return new OrderResource($order);
+
+
+
     }
 
     /**
