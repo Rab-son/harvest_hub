@@ -36,6 +36,10 @@ input:focus {
     border-color: #5b08a7;
 }
 
+.red-status {
+    color: red;
+}
+
 .btn,
 .btn-add,
 .btn-edit,

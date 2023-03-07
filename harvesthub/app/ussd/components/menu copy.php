@@ -387,8 +387,8 @@ class Menu{
                 }
                 
                 $product = new Product();
+                $product->setUserId($id);
                 $product->setID($product_id);
-                $product->setPhoneNumber($phoneNumber);
                 $product->updateProduct($pdo);
 
                 $response = "CON Product Marked Successfully.\n";
