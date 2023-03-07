@@ -7,6 +7,7 @@ use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use App\Http\Resources\ProductResource;
 use App\Models\Product;
+use AfricasTalking\SDK\AfricasTalking;
 
 class ProductController extends Controller
 {
@@ -56,7 +57,32 @@ class ProductController extends Controller
     {
         $data = $request->validated();
         $product->update($data);
-
+    
+        // Check if phone_number exists on the form
+        $phone_number = $request->input('phone_number');
+        if ($phone_number) {
+            // Initialize the SDK
+            $username = env('AFRICASTALKING_USERNAME');
+            $api_key = env('AFRICASTALKING_API_KEY');
+            $AT = new AfricasTalking($username, $api_key);
+    
+            // Set the SMS service
+            $sms = $AT->sms();
+    
+            // Set the message
+            $message = "The status of your product has been updated.";
+    
+            // Set the recipients
+            $recipients = [$phone_number];
+    
+            // Send the message
+            $sms->send([
+                'to'      => $recipients,
+                'message' => $message,
+                'from'    => 'HH'
+            ]);
+        }
+    
         return new ProductResource($product);
     }
 
