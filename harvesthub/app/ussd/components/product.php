@@ -62,6 +62,17 @@
           
         }
 
+        public function submittedProduct($pdo){
+
+            $stmt = $pdo->prepare("SELECT * FROM products WHERE status = 'Pending' LIMIT 8");
+            $stmt->execute();  
+            $rows = $stmt->fetchAll();
+    
+            return $rows;
+          
+        }
+
+
 
         public function register($pdo){
             try{

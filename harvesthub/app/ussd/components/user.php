@@ -179,6 +179,15 @@ class User
 
     }
 
+    public function readPhoneNumber($pdo)
+    {
+        $stmt = $pdo->prepare("SELECT * FROM users WHERE phone_number=?");
+        $stmt->execute([$this->getPhone()]);
+        $row = $stmt->fetch();
+        return $row['phone_number'];
+
+    }
+
     public function readId($pdo)
     {
         $stmt = $pdo->prepare("SELECT * FROM users WHERE phone_number=?");

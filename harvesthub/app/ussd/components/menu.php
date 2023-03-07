@@ -47,7 +47,7 @@ class Menu{
     public function mainMenuRegistered($name){
         $response = "CON Welcome " .$name. " Reply with \n";
         $response .="1. Buy Products\n";
-        $response .="2. View Orders\n";
+        $response .="2. Notifications\n";
         $response .="3. Sell Products\n";
         $response .="4. My Account\n";
         $response .="5. Help\n";
@@ -282,7 +282,7 @@ class Menu{
 
     }
 
-    public function viewOrdersMenu($textArray, $order ,$id, $pdo, $user){
+    public function viewOrdersMenu($textArray, $order ,$id, $pdo, $user, $product, $phoneNumber){
         $level = count($textArray);
         if($level == 1){
             echo "CON Enter PIN";
@@ -292,27 +292,11 @@ class Menu{
             if($user->correctPin($pdo) == true){
 
                 $numbering = 0;
-                $response = "CON Your Orders - HarvestHub\n";
-                
-                $has_orders = false;
-                foreach ($order as $n) {
-                    $numbering++;
-                    $n['product_id'];
-                    $a = array($numbering, $n['product_id']);
-                    if ($n['customer_id'] == $id) {
-                        $response .= ($a[0]) . ".  " . $n['product_name'] . " " . $n['quantity'] . " " . $n['status'] . " " . $n['location'] . " \n";
-                        $has_orders = true;
-                    }
-                }
-                
-                if (!$has_orders) {
-                    $response .= "You Have No Orders\n";
-                }
-    
+                $response = "CON Your Notifications - HarvestHub\n";
+                $response .= "1. Orders\n";
+                $response .= "2. Submitted Products\n";
                 $response .=Util::$GO_TO_MAIN_MENU ." Main Menu\n";
                 echo $response;
-                return $a;
-    
 
 
             }else{
@@ -321,7 +305,52 @@ class Menu{
                 $response .=Util::$GO_TO_MAIN_MENU ." Main Menu\n";
                 echo $response;
             }
-        }else{
+        }else if($level == 3 && $textArray[2] == 1){
+            $numbering = 0;
+            $response = "CON Your Orders - HarvestHub\n";
+            
+            $has_orders = false;
+            foreach ($order as $n) {
+                $numbering++;
+                $n['product_id'];
+                $a = array($numbering, $n['product_id']);
+                if ($n['customer_id'] == $id) {
+                    $response .= ($a[0]) . ".  " . $n['product_name'] . " " . $n['quantity'] . " " . $n['status'] . " " . $n['location'] . " \n";
+                    $has_orders = true;
+                }
+            }
+            
+            if (!$has_orders) {
+                $response .= "You Have No Orders\n";
+            }
+
+            $response .=Util::$GO_TO_MAIN_MENU ." Main Menu\n";
+            echo $response;
+            return $a;
+        }else if($level == 3 && $textArray[2] == 2){
+            $numbering = 0;
+            $response = "CON Your Submitted Products - HarvestHub\n";
+            
+            $has_products = false;
+            foreach ($product as $n) {
+                $numbering++;
+                $n['product_id'];
+                $a = array($numbering, $n['product_id']);
+                if ($n['phone_number'] == $phoneNumber) {
+                    $response .= ($a[0]) . ".  " . $n['name'] . " " . $n['unit'] . " " . $n['status'] . " " . $n['created_at'] . " \n";
+                    $has_products = true;
+                }
+            }
+            
+            if (!$has_products) {
+                $response .= "You Have Pending Products\n";
+            }
+
+            $response .=Util::$GO_TO_MAIN_MENU ." Main Menu\n";
+            echo $response;
+            return $a;
+        }
+        else{
             $response = "CON Wrong Option\n";
             $response .=Util::$GO_BACK ." Try Again\n";
             $response .=Util::$GO_TO_MAIN_MENU ." Main Menu\n";
