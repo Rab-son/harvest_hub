@@ -58,7 +58,7 @@
         }
 
         public function orderedItem($pdo) {
-            $stmt = $pdo->prepare("SELECT o.*, p.name AS product_name FROM orders o JOIN products p ON o.product_id = p.id AND notification ='Unread' LIMIT 6");
+            $stmt = $pdo->prepare("SELECT o.*, p.name AS product_name FROM orders o JOIN products p ON o.product_id = p.id WHERE o.notification = 'Unread' LIMIT 6");
             $stmt->execute();
             $rows = $stmt->fetchAll();
             return $rows;
@@ -79,25 +79,7 @@
         }
         
 
-        /*
-        public function updateOrder($pdo)
-        {
-            try {
-                //hash the pin
-                $notification = 'Read';
-                $sql = "UPDATE orders SET notification=:notification WHERE customer_id=:customer_id";
-                $stmt = $pdo->prepare($sql);
-                $stmt->execute(array(
-                    ':notification' => $notification,
-                    ':customer_id' => $this->getUserId()
-                ));
 
-    
-            } catch (PDOException $e) {
-                echo $e->getMessage();
-            }
-        }
-        */
 
 
     }

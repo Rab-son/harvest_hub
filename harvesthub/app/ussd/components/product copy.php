@@ -45,10 +45,6 @@
             return $this->quantity;
         }
 
-        public function setPhoneNumber($phonenumber){
-            $this->phonenumber = $phonenumber;
-        }
-
         public function getPhone()
         {
             return $this->phonenumber;
@@ -75,7 +71,7 @@
 
         public function submittedProduct($pdo){
 
-            $stmt = $pdo->prepare("SELECT * FROM products WHERE status = 'Pending' AND notification = 'Unread' LIMIT 8");
+            $stmt = $pdo->prepare("SELECT * FROM products WHERE status = 'Pending' LIMIT 8");
             $stmt->execute();  
             $rows = $stmt->fetchAll();
     
